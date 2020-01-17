@@ -2,10 +2,10 @@ import React from "react";
 
 import Checkbox from "../checkbox/Checkbox";
 
-const TaskItem = task => {
+const TaskItem = ({ task }) => {
   const { name, _id, deadline, archived } = task;
   const handleTaskCheck = () => {
-    console.log(task);
+    console.log(name);
   };
 
   return (

@@ -4,7 +4,7 @@ import useAuthState from "./AuthState";
 
 //import useAuthState from "./AuthState";
 import { fetchTasksWithUserToken, saveNewTask } from "../api/data";
-import { sortTaskList } from "../helpers/sortTaskList";
+import { TasksList } from "../helpers/sortTaskList";
 
 /* Action Types */
 const types = {
@@ -19,7 +19,7 @@ const types = {
 const TasksStateContext = createContext();
 
 const initialState = {
-  tasks: [],
+  tasks: null,
   isFetching: false,
   error: null,
   activeFilter: ""
@@ -87,8 +87,10 @@ const useTaskState = () => {
     dispatch({ type: types.FETCH_START });
     const response = await fetchTasksWithUserToken(user.auth.token);
     const data = response.data;
-    const sortedList = sortTaskList(data);
-    dispatch({ type: types.FETCH_OK, payload: sortedList });
+
+    const list = new TasksList(data);
+
+    dispatch({ type: types.FETCH_OK, payload: list });
   };
 
   const setFilter = filter =>

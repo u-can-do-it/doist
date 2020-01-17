@@ -9,6 +9,7 @@ import styled from "styled-components";
 import WithSpinner from "../../components/with-spinner/with-spinner";
 import ListWithHeader from "../../components/tasks-list/ListWithHeader";
 import TaskItem from "../../components/task-item/TaskItem";
+import moment from "moment";
 
 const StyledDashboard = styled.div`
   border-right: 1px solid #f1f1f1;
@@ -25,16 +26,47 @@ const StyledContentContainer = styled.div`
 
 const DashboardPage = ({ match }) => {
   const taskState = useTaskState();
-  const { tasks = [], isFetching } = taskState;
+  const { tasks, isFetching } = taskState;
   useEffect(() => {
     taskState.fetchTasks();
-  }, [taskState]);
+  }, []);
+  const separator = match.params.separator;
+  let list = [];
+  if (tasks) {
+    switch (separator) {
+      case "TODAY":
+        list = (
+          <ListWithHeader
+            list={tasks.todayTasks}
+            header={"Today"}
+            subHeader={"17 styczeń"}
+          />
+        );
+        break;
+      case "INBOX":
+        list = <ListWithHeader list={tasks.inbox} header={"Inbox"} />;
+        break;
+      case "NEXT_7":
+        const tasksList = tasks.next_7;
+        const days = Object.keys(tasksList);
+        list = days.reduce(
+          (acc, day, index) =>
+            (acc = [
+              ...acc,
+              <ListWithHeader list={tasksList[day]} header={day} key={index} />
+            ]),
+          []
+        );
+        break;
+      default:
+    }
+  }
 
   return (
     <StyledDashboard>
       <LeftMenu />
       <StyledContentContainer>
-        <WithSpinner isLoading={isFetching}>lista zadań</WithSpinner>
+        <WithSpinner isLoading={isFetching}>{list} </WithSpinner>
       </StyledContentContainer>
     </StyledDashboard>
   );
