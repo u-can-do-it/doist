@@ -46,6 +46,18 @@ cursor: pointer;
    outline:none;
  }
 }
+
+p {
+  font-size:1.4rem;
+  color:#333;
+  line-height:1.8rem;
+}
+
+h1{
+  font-size: 2rem;
+    font-weight: 600;
+    line-height: 2.5rem;
+}
 `;
 
 export default GlobalStyle;

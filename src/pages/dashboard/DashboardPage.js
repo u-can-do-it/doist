@@ -16,12 +16,19 @@ const StyledDashboard = styled.div`
   min-height: 100vh;
   padding-top: 4.4rem;
   background-color: white;
+
+  h1 {
+    margin-bottom: 8px;
+  }
 `;
 
 const StyledContentContainer = styled.div`
   margin-left: 23.5rem;
   height: 100%;
   padding-top: 3rem;
+  padding-left: 44px;
+  padding-right: 14px;
+  padding-bottom: 84px;
 `;
 
 const DashboardPage = ({ match }) => {
@@ -32,9 +39,11 @@ const DashboardPage = ({ match }) => {
   }, []);
   const separator = match.params.separator;
   let list = [];
+  let header = "Inbox";
   if (tasks) {
     switch (separator) {
       case "TODAY":
+        header = "Today";
         list = (
           <ListWithHeader
             list={tasks.todayTasks}
@@ -47,6 +56,7 @@ const DashboardPage = ({ match }) => {
         list = <ListWithHeader list={tasks.inbox} header={"Inbox"} />;
         break;
       case "NEXT_7":
+        header = "Next 7 days";
         const tasksList = tasks.next_7;
         const days = Object.keys(tasksList);
         list = days.reduce(
@@ -66,6 +76,7 @@ const DashboardPage = ({ match }) => {
     <StyledDashboard>
       <LeftMenu />
       <StyledContentContainer>
+        <h1>{header}</h1>
         <WithSpinner isLoading={isFetching}>{list} </WithSpinner>
       </StyledContentContainer>
     </StyledDashboard>
