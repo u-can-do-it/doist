@@ -58,6 +58,10 @@ h1{
     font-weight: 600;
     line-height: 2.5rem;
 }
+
+ul{
+  list-style:none;
+}
 `;
 
 export default GlobalStyle;

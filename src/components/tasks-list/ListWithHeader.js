@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import TaskItem from "../task-item/TaskItem";
+import AddTask from "../add-task/AddTask";
 
 const StyledListHeader = styled.h2`
   font-size: 1.4rem;
@@ -29,6 +30,9 @@ const ListWithHeader = ({ header = "", subHeader = "", list = [] }) => (
       {list.map((item, index) => (
         <TaskItem task={item} key={index} />
       ))}
+      <li className="add-task">
+        <AddTask />
+      </li>
     </ul>
   </div>
 );

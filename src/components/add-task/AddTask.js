@@ -1,73 +1,54 @@
 import React, { useState } from "react";
 import useTaskState from "../../store/TaskState";
-import { MdLabel, MdPriorityHigh } from "react-icons/md";
-import { FaProjectDiagram, FaBell } from "react-icons/fa";
+import styled from "styled-components";
+import { FiPlus } from "react-icons/fi";
 
-import TextArea from "../text-area/text-area";
-import FormInput from "../form-input/FormInput";
+import TaskItemEditor from "../task-item/TaskItemEditor";
+
+const StyledAddButton = styled.button`
+  display: flex;
+  color: black;
+  width: 90px;
+  height: 21px;
+  cursor: pointer;
+  margin-left: 2px;
+  margin-top: 10px;
+
+  :hover {
+    color: red;
+  }
+
+  :hover svg {
+    background-color: red;
+    color: white;
+  }
+
+  svg {
+    display: block;
+    margin-left: 1px;
+    margin-right: 10px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background-color: transparent;
+    color: black;
+    font-size: 16px;
+  }
+`;
 
 const AddTask = () => {
   const [isEditMode, setIsEditMode] = useState(false);
-  const taskState = useTaskState();
-  const { addTask } = taskState;
-  const [newTask, setNewTask] = useState({
-    name: ""
-  });
 
-  const handleNameSet = event => {
-    setNewTask({
-      ...newTask,
-      name: event.target.value
-    });
-  };
-
-  const handleDeadlineSet = event => {
-    setNewTask({
-      ...newTask,
-      deadline: event.target.value
-    });
-  };
+  const handleEditModeOn = () => setIsEditMode(true);
+  const handleEditModeOff = () => setIsEditMode(false);
 
   const editButton = (
-    <button onClick={() => setIsEditMode(true)}>Add task</button>
+    <StyledAddButton onClick={handleEditModeOn}>
+      <FiPlus /> Add task
+    </StyledAddButton>
   );
 
-  const handeAddTask = () => {
-    addTask(newTask);
-    setIsEditMode(false);
-    setNewTask({ name: "" });
-  };
-  const editor = (
-    <div>
-      <form>
-        <TextArea handleChange={handleNameSet} name={"name"} />
-
-        <div>date field</div>
-      </form>
-
-      <div>
-        <div>
-          <button onClick={handeAddTask}>+ AddTask</button>
-          <button onClick={() => setIsEditMode(false)}>Cancel</button>
-        </div>
-        <div>
-          <button>
-            <FaProjectDiagram />
-          </button>
-          <button>
-            <MdLabel />
-          </button>
-          <button>
-            <MdPriorityHigh />
-          </button>
-          <button>
-            <FaBell />
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-  return isEditMode ? editor : editButton;
+  return isEditMode ? <TaskItemEditor hide={handleEditModeOff} /> : editButton;
 };
 
 export default AddTask;
