@@ -67,7 +67,7 @@ const TaskItem = ({ task }) => {
     </>
   );
 
-  const editor = <TaskItemEditor hide={handleEditOff} />;
+  const editor = <TaskItemEditor hide={handleEditOff} task={task} />;
 
   return <StyledTaskItem>{isEditMode ? editor : taskItem}</StyledTaskItem>;
 };

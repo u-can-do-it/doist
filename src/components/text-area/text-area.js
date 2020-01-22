@@ -14,15 +14,17 @@ const StyledTextArea = styled.textarea`
   }
 `;
 
-const TextArea = ({ handleChange, name }) => {
+const TextArea = ({ handleChange, name, value }) => {
   const handleResize = event => {
     event.target.style.height = `${event.target.scrollHeight}px`;
   };
 
   return (
     <StyledTextArea
-      name={name}
+      name="name"
       onInput={event => handleResize(event)}
+      value={value}
+      onChange={event => handleChange(event)}
     ></StyledTextArea>
   );
 };
