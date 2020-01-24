@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import Calendar from "react-calendar";
 
@@ -29,33 +29,48 @@ const StyledDatePicker = styled.div`
   }
 `;
 
-const DatePick = ({ date = new Date(), handleDatePick = () => {} }) => {
+const DatePick = ({ date = new Date(), onDatePick }) => {
   const monthName = date.toLocaleString("en-us", { month: "long" });
   const dayName = date.toLocaleString("en-us", { weekday: "long" });
-  const tomorrow = new Date(date.getDate() + 1);
-  const tomorrowDayName = tomorrow.toLocaleString("en-us", { weekday: "long" });
   const dayNumber = date.getDate();
   const today = new Date();
+  const tomorrow = new Date(today);
+  tomorrow.setDate(tomorrow.getDate() + 1);
+  const nextWeek = new Date();
+  nextWeek.setDate(today.getDate() + ((1 + 7 - today.getDay()) % 7));
+  const nextWeekDay = nextWeek.toLocaleString("en-us", { weekday: "long" });
+  const tomorrowDayName = tomorrow.toLocaleString("en-us", { weekday: "long" });
 
   return (
     <StyledDatePicker onBlur={() => console.log("blur")}>
       <h4 className="header">
         {dayNumber} {monthName}
       </h4>
-      <OptionButton icon={<MdToday />} name="Today" details={dayName} />
+      <OptionButton
+        icon={<MdToday />}
+        name="Today"
+        details={dayName}
+        onClick={() => onDatePick(today)}
+      />
       <OptionButton
         icon={<GiCutDiamond />}
         name="Tomorrow"
         details={tomorrowDayName}
+        onClick={() => onDatePick(tomorrow)}
       />
-      <OptionButton icon={<MdNextWeek />} name="Nex week" details={dayName} />
+      <OptionButton
+        icon={<MdNextWeek />}
+        name="Nex week"
+        details={nextWeekDay}
+        onClick={() => onDatePick(nextWeek)}
+      />
       <OptionButton icon={<MdDoNotDisturbAlt />} name="No date" />
       <Calendar
         activeStartDate={today}
         defaultActiveStartDate={today}
         minDate={today}
         value={date}
-        onChange={date => handleDatePick(date)}
+        onChange={date => onDatePick(date)}
         locale={"en"}
       />
     </StyledDatePicker>

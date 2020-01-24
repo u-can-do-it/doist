@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { MdCheck } from "react-icons/md";
 
@@ -52,7 +52,7 @@ const StyledCheckBox = styled.label`
 
 const Checkbox = ({ handleCheck }) => (
   <StyledCheckBox>
-    <input type="radio" onChange={handleCheck} />
+    <input type="radio" onChange={() => handleCheck()} />
     <span className="checkmark">
       <MdCheck />
     </span>

@@ -15,3 +15,22 @@ export const saveNewTask = (task, token) =>
       "X-Auth-Token": token
     }
   });
+
+export const saveExistingTask = (task, token) =>
+  api.put(`/tasks/${task._id}`, task, {
+    headers: {
+      "Content-Type": "application/json",
+      "X-Auth-Token": token
+    }
+  });
+
+export const executeTask = (task, token) => {
+  task.archived = true;
+  console.log(task);
+  return api.put(`/tasks/${task._id}`, task, {
+    headers: {
+      "Content-Type": "application/json",
+      "X-Auth-Token": token
+    }
+  });
+};

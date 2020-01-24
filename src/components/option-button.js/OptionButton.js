@@ -30,8 +30,8 @@ const StyledOpotionButton = styled.button`
   }
 `;
 
-const OptionButton = ({ icon, name, details }) => (
-  <StyledOpotionButton>
+const OptionButton = ({ icon, name, details, onClick }) => (
+  <StyledOpotionButton onClick={onClick}>
     <span className="icon">{icon}</span>
     <span className="name">{name}</span>
     <span className="details">{details}</span>

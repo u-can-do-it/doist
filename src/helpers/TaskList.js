@@ -46,21 +46,21 @@ import moment from "moment";
 export class TasksList {
   next_7 = [];
   format = "MM-DD-YYYY";
-  today = moment();
+  todayDate = moment();
   inbox = [];
-  todayTasks = [];
+  today = [];
+
   constructor(tasks) {
     this.next_7 = this.sort(tasks);
-    this.todayTasks = this.next_7[this.today.format(this.format)] || [];
+    this.today = this.next_7[this.todayDate.format(this.format)] || [];
     this.inbox = tasks;
   }
 
   sort(tasks) {
     const sortedTasks = tasks.reduce((sorted, task) => {
       const deadline = moment(task.deadline);
-
       const tasksKey = deadline.format(this.format);
-      const daysToDeadline = deadline.diff(this.today, "days");
+      const daysToDeadline = deadline.diff(this.todayDate, "days");
       console.log(daysToDeadline);
       switch (true) {
         case daysToDeadline < 0:
@@ -84,5 +84,17 @@ export class TasksList {
     );
 
     return sortedTasks;
+  }
+
+  addTask(taskToAdd) {
+    this.inbox = this.inbox.concat(taskToAdd);
+    this.next_7 = this.sort(this.inbox);
+    this.today = this.next_7[this.todayDate.format(this.format)] || [];
+  }
+
+  deleteTask(taskToDelete) {
+    this.inbox = this.inbox.filter(task => task._id !== taskToDelete._id);
+    this.next_7 = this.sort(this.inbox);
+    this.today = this.next_7[this.todayDate.format(this.format)] || [];
   }
 }

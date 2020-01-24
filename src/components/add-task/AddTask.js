@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import useTaskState from "../../store/TaskState";
 import styled from "styled-components";
 import { FiPlus } from "react-icons/fi";
 

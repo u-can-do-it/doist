@@ -3,8 +3,13 @@ import React, { createContext, useReducer, useContext } from "react";
 import useAuthState from "./AuthState";
 
 //import useAuthState from "./AuthState";
-import { fetchTasksWithUserToken, saveNewTask } from "../api/data";
-import { TasksList } from "../helpers/sortTaskList";
+import {
+  fetchTasksWithUserToken,
+  saveNewTask,
+  saveExistingTask,
+  executeTask
+} from "../api/data";
+import { TasksList } from "../helpers/TaskList";
 
 /* Action Types */
 const types = {
@@ -12,7 +17,8 @@ const types = {
   FETCH_OK: "FETCH_OK",
   FETCH_ERROR: "FETCH_ERROR",
   SET_FILTER: "SET_FILTER",
-  ADD_TASK: "ADD_TASK"
+  ADD_TASK: "ADD_TASK",
+  DELETE_TASK: "DELETE_TASK"
 };
 
 /* Define a context and a reducer for updating the context */
@@ -26,7 +32,6 @@ const initialState = {
 };
 
 const tasksStateReducer = (state, action) => {
-  console.log(action);
   switch (action.type) {
     case types.FETCH_START:
       return {
@@ -54,12 +59,18 @@ const tasksStateReducer = (state, action) => {
       };
 
     case types.ADD_TASK:
+      state.tasks.addTask(action.payload);
       return {
-        ...state,
-        tasks: [...state.tasks, action.payload]
+        ...state
       };
 
+    case types.DELETE_TASK:
+      state.tasks.deleteTask(action.payload);
+      return {
+        ...state
+      };
     default:
+      console.log("Koń Rafaaaał");
       return state;
   }
 };
@@ -99,7 +110,6 @@ const useTaskState = () => {
   const addTask = async task => {
     try {
       const response = await saveNewTask(task, user.auth.token);
-
       const newTask = response.data;
       dispatch({ type: types.ADD_TASK, payload: newTask });
     } catch (error) {
@@ -107,11 +117,30 @@ const useTaskState = () => {
     }
   };
 
+  const deleteTask = async task => {
+    try {
+      await executeTask(task, user.auth.token);
+      dispatch({ type: types.DELETE_TASK, payload: task });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const editTask = async task => {
+    try {
+      await saveExistingTask(task, user.auth.token);
+      dispatch({ type: types.DELETE_TASK, payload: task });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return {
     ...tasksState,
     fetchTasks,
     setFilter,
-    addTask
+    addTask,
+    deleteTask,
+    editTask
   };
 };
 

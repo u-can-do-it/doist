@@ -1,15 +1,12 @@
 import React, { useEffect } from "react";
 import useTaskState from "../../store/TaskState";
-import tasksSeparators from "../../constants/tasksSeparators";
 
 import LeftMenu from "../../components/left-menu/LeftMenu";
-import TasksList from "../../components/tasks-list/TasksList";
+
 import styled from "styled-components";
 
 import WithSpinner from "../../components/with-spinner/with-spinner";
 import ListWithHeader from "../../components/tasks-list/ListWithHeader";
-import TaskItem from "../../components/task-item/TaskItem";
-import moment from "moment";
 
 const StyledDashboard = styled.div`
   border-right: 1px solid #f1f1f1;
@@ -35,27 +32,28 @@ const DashboardPage = ({ match }) => {
   const taskState = useTaskState();
   const { tasks, isFetching } = taskState;
   useEffect(() => {
-    taskState.fetchTasks();
+    const fetch = () => taskState.fetchTasks();
+
+    fetch();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
   const separator = match.params.separator;
   let list = [];
-  let header = "Inbox";
+  let header = "inbox";
   if (tasks) {
     switch (separator) {
-      case "TODAY":
+      case "today":
         header = "Today";
         list = (
           <ListWithHeader
-            list={tasks.todayTasks}
+            list={tasks.today}
             header={"Today"}
             subHeader={"17 styczeń"}
           />
         );
         break;
-      case "INBOX":
-        list = <ListWithHeader list={tasks.inbox} header={"Inbox"} />;
-        break;
-      case "NEXT_7":
+      case "next_7":
         header = "Next 7 days";
         const tasksList = tasks.next_7;
         const days = Object.keys(tasksList);
@@ -69,6 +67,7 @@ const DashboardPage = ({ match }) => {
         );
         break;
       default:
+        list = <ListWithHeader list={tasks.inbox} header={"inbox"} />;
     }
   }
 

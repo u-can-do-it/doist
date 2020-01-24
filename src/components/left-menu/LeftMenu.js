@@ -1,11 +1,10 @@
 import React from "react";
-import { FaInbox, FaRegCalendarAlt, FaRegCalendar } from "react-icons/fa";
-import useTaskState from "../../store/TaskState";
 
 import FilterButton from "../option-button.js/OptionButton";
 import styled from "styled-components";
-import { Link, useRouteMatch } from "react-router-dom";
-import { taskSeparators } from "../../constants/tasksSeparators";
+import { Link } from "react-router-dom";
+import { TASK_SEPARATORS } from "../../constants/tasksSeparators";
+import useTaskState from "../../store/TaskState";
 
 const StyledLeftMenu = styled.div`
   user-select: none !important;
@@ -22,13 +21,20 @@ const StyledLeftMenu = styled.div`
 `;
 
 const LeftMenu = () => {
+  const { tasks } = useTaskState();
+  console.log(tasks);
   return (
     <StyledLeftMenu>
       <div>
         <ul>
-          {taskSeparators.map(({ icon, key, name }) => (
+          {TASK_SEPARATORS.map(({ icon, key, name }) => (
             <Link to={`/dashboard/${key}`} key={key}>
-              <FilterButton filter={key} name={name} icon={icon} />
+              <FilterButton
+                filter={key}
+                name={name}
+                icon={icon}
+                details={tasks ? tasks[key].length : null}
+              />
             </Link>
           ))}
         </ul>

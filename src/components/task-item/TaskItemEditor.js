@@ -13,6 +13,7 @@ import ButtonCancel from "../styles/ButtonCancel";
 import DatePick from "../date-pick/DatePick";
 import TextArea from "../text-area/text-area";
 import Task from "../../models/Task";
+import useTaskState from "../../store/TaskState";
 
 const StyledTaskEditor = styled.div`
   max-width: 62.8rem;
@@ -60,6 +61,7 @@ const StyledTaskEditor = styled.div`
 
 const TaskItemEditor = ({ hide, task }) => {
   const [isDatePickerOn, setIsDatePickerOn] = useState(false);
+  const { addTask } = useTaskState();
 
   const [editedTask, setEditedTask] = useState(
     task
@@ -70,23 +72,30 @@ const TaskItemEditor = ({ hide, task }) => {
       : new Task()
   );
 
-  const datePicker = isDatePickerOn ? (
-    <div className="date-pick" onBlur={() => setIsDatePickerOn(false)}>
-      <DatePick />
-    </div>
-  ) : null;
-
   const handleTaskEdit = event => {
     const { name, value } = event.target;
     setEditedTask({ ...editedTask, [name]: value });
   };
 
+  const handleDateEdit = date => {
+    console.log(date);
+    setEditedTask({ ...editedTask, deadline: date });
+  };
+
   const handleSubmit = event => {
     event.preventDefault();
-    console.log("submit");
+    console.log(editedTask);
+    addTask(editedTask);
+    hide()
   };
 
   const { name, deadline } = editedTask;
+
+  const datePicker = isDatePickerOn ? (
+    <div className="date-pick" onBlur={() => setIsDatePickerOn(false)}>
+      <DatePick onDatePick={handleDateEdit} />
+    </div>
+  ) : null;
 
   return (
     <StyledTaskEditor>
@@ -108,7 +117,7 @@ const TaskItemEditor = ({ hide, task }) => {
 
         <div className="controls">
           <div>
-            <Button type="submit">+ AddTask</Button>
+            <Button type="submit"> AddTask</Button>
             <ButtonCancel onClick={() => hide()} type="button">
               Cancel
             </ButtonCancel>

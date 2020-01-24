@@ -4,6 +4,7 @@ import styled from "styled-components";
 import Checkbox from "../checkbox/Checkbox";
 import TaskItemMenu from "./TaskItemMenu";
 import TaskItemEditor from "./TaskItemEditor";
+import useTaskState from "../../store/TaskState";
 
 const StyledTaskItem = styled.div`
   display: flex;
@@ -39,20 +40,22 @@ const StyledTaskContent = styled.div`
 `;
 
 const TaskItem = ({ task }) => {
-  const { name, _id, deadline, archived } = task;
+  const { name, deadline } = task;
   const [isEditMode, setIsEditMode] = useState(false);
+  const taskState = useTaskState();
 
-  const handleCheck = () => {
-    console.log(task);
+  const handleTaskDelete = () => {
+    taskState.deleteTask(task);
   };
 
   const handleEditOn = () => setIsEditMode(true);
   const handleEditOff = () => setIsEditMode(false);
 
+  console.log("itemsrender");
   const taskItem = (
     <>
       <div>
-        <Checkbox handleCheck={handleCheck} />
+        <Checkbox handleCheck={handleTaskDelete} />
       </div>
       <StyledTaskContent>
         <p className="name" onClick={handleEditOn}>

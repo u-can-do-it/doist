@@ -28,7 +28,7 @@ const ListWithHeader = ({ header = "", subHeader = "", list = [] }) => (
     </StyledListHeader>
     <ul>
       {list.map((item, index) => (
-        <TaskItem task={item} key={index} />
+        <TaskItem task={item} key={item._id} />
       ))}
       <li className="add-task">
         <AddTask />
