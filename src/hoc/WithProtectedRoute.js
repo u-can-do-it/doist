@@ -2,14 +2,24 @@ import React from "react";
 import useAuthState from "../store/AuthState";
 import { Route, Redirect } from "react-router";
 
-const WithPrivateRoute = ({ children, location, redirectTo, ...rest }) => {
+const WithProtectedRoute = ({
+  onlyUser = true,
+  onlyGuest = false,
+  children,
+  location,
+  redirectTo,
+  ...rest
+}) => {
   const user = useAuthState();
+  let shouldRedirect;
+  if (onlyUser) shouldRedirect = user.auth.token;
+  if (onlyGuest) shouldRedirect = !user.auth.token;
 
   return (
     <Route
       {...rest}
       render={({ location }) =>
-        user.auth.token ? (
+        shouldRedirect ? (
           children
         ) : (
           <Redirect
@@ -24,4 +34,4 @@ const WithPrivateRoute = ({ children, location, redirectTo, ...rest }) => {
   );
 };
 
-export default WithPrivateRoute;
+export default WithProtectedRoute;

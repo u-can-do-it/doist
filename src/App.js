@@ -4,23 +4,33 @@ import { Switch, Route } from "react-router-dom";
 import Layout from "./components/layout/Layout";
 import LoginPage from "./pages/login/LoginPage";
 import DashboardPage from "./pages/dashboard/DashboardPage";
-import WithPrivateRoute from "./hoc/WithPrivateRoute";
+import WithProtectedRoute from "./hoc/WithProtectedRoute";
+
 import HomePage from "./pages/home/HomePage";
+import SinUpPage from "./pages/sign-up/SignUpPage";
 
 const App = () => {
   return (
-    <div className="App">
+    <>
       <Switch>
-        <Route path="/home" component={HomePage} />
-        <Route path="/login" component={LoginPage} />
-        <WithPrivateRoute redirectTo="/login">
+        <WithProtectedRoute
+          redirectTo="/dashboard"
+          onlyGuest={true}
+          onlyUser={false}
+        >
+          <Route path="/home" component={HomePage} />
+          <Route path="/login" component={LoginPage} />
+          <Route path="/signup" component={SinUpPage} />
+        </WithProtectedRoute>
+
+        <WithProtectedRoute redirectTo="/login">
           <Layout>
             <Route path="/dashboard/:separator" component={DashboardPage} />
             <Route path="/dashboard/" component={DashboardPage} />
           </Layout>
-        </WithPrivateRoute>
+        </WithProtectedRoute>
       </Switch>
-    </div>
+    </>
   );
 };
 

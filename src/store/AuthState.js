@@ -1,14 +1,19 @@
 import React, { createContext, useReducer, useContext } from "react";
 
-import { loginWithEmailAndPassword } from "../api/auth";
+import {
+  loginWithEmailAndPassword,
+  signupWithEmailAndPassword
+} from "../api/auth";
 import { persistState, getPersistedState } from "../helpers/persistState";
+import api from "../api/api";
 
 /* Action Types */
 const types = {
   AUTH_START: "AUTH_START",
   AUTH_OK: "AUTH_OK",
   AUTH_ERROR: "AUTH_ERROR",
-  AUTH_LOGOUT: "AUTH_LOGOUT"
+  AUTH_LOGOUT: "AUTH_LOGOUT",
+  AUTH_NEW_ACCOUNT: "AUTH_NEW_ACCOUNT"
 };
 
 /* Define a context and a reducer for updating the context */
@@ -60,6 +65,12 @@ const reducer = (state, action) => {
         ...initialState
       };
 
+    case types.AUTH_NEW_ACCOUNT:
+      return {
+        ...state,
+        ...action.payload
+      };
+
     default:
       return state;
   }
@@ -99,10 +110,16 @@ const useAuthState = () => {
 
   const authLogout = () => dispatch({ type: types.AUTH_LOGOUT });
 
+  const authCreateAccount = async (email, password) => {
+    const response = await signupWithEmailAndPassword(email, password);
+    console.log(response);
+  };
+
   return {
     auth,
     authLogin,
-    authLogout
+    authLogout,
+    authCreateAccount
   };
 };
 

@@ -1,0 +1,138 @@
+import React, { useState } from "react";
+
+import useAuthState from "../../store/AuthState";
+
+import { Link } from "react-router-dom";
+import { StyledButton } from "../../components/styles/Button.styles";
+import { StyledAuthForm } from "../../components/styles/AuthForm.styles";
+import { StyledAuthPage } from "../../components/styles/AuthPage.styles";
+import FormInput from "../../components/form-input/FormInput";
+
+const SignUpPage = () => {
+  const auth = useAuthState();
+  const [form, setForm] = useState({
+    email: "",
+    password: "",
+    password2: "",
+    isValid: false,
+    passwordFeedback: null,
+    password2Feedback: null
+  });
+  const {
+    email,
+    password,
+    password2,
+    passwordFeedback,
+    password2Feedback,
+    isValid
+  } = form;
+
+  const handleSubmit = event => {
+    event.preventDefault();
+
+    if (password !== password2) {
+      setForm({ ...form, password2Feedback: "Passwords don't match." });
+      return;
+    }
+
+    if (isValid) {
+      auth.authCreateAccount(email, password);
+    }
+  };
+
+  const handleChange = event => {
+    const { name, value } = event.target;
+
+    if (name === "password") {
+      const validation = validatePassword(value);
+      setForm({
+        ...form,
+        [name]: value,
+        isValid: validation.isValid,
+        passwordFeedback: validation.feedback
+      });
+    } else {
+      setForm({ ...form, [name]: value });
+    }
+  };
+
+  const validatePassword = password => {
+    let feedback = "";
+    let isValid = true;
+
+    if (password.length < 6) {
+      feedback += "Minimum six characters";
+      isValid = false;
+    }
+
+    if (!password.match(/[A-Z]/g)) {
+      if (!isValid) {
+        feedback += ", one capital letter";
+      } else {
+        feedback += "Minimum one capital letter";
+        isValid = false;
+      }
+    }
+
+    if (!password.match(/[0-9]/g)) {
+      if (!isValid) {
+        feedback += ", one number";
+      } else {
+        feedback += "Minimum one number";
+        isValid = false;
+      }
+    }
+    feedback += ".";
+
+    return {
+      isValid: isValid,
+      feedback: isValid ? "" : feedback
+    };
+  };
+
+  return (
+    <StyledAuthPage>
+      <div className="container">
+        <div>
+          <h1>Sign Up</h1>
+        </div>
+
+        <StyledAuthForm onSubmit={event => handleSubmit(event)}>
+          <FormInput
+            type="email"
+            name="email"
+            value={email}
+            onChange={handleChange}
+            label="Email"
+            required
+          />
+          <FormInput
+            feedback={passwordFeedback}
+            type="password"
+            name="password"
+            value={password}
+            onChange={handleChange}
+            label="Password"
+            required
+          />
+
+          <FormInput
+            type="password"
+            name="password2"
+            value={password2}
+            onChange={handleChange}
+            label="Confirm Password"
+            required
+            feedback={password2Feedback}
+          />
+
+          <StyledButton type="submit">Create</StyledButton>
+          <p>
+            If You have an account go to <Link to="/login">Log in</Link>
+          </p>
+        </StyledAuthForm>
+      </div>
+    </StyledAuthPage>
+  );
+};
+export default SignUpPage;

@@ -1,7 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import StyledButton from "../../components/styles/Button";
+import { StyledButton } from "../../components/styles/Button.styles";
+
 import { pyramids } from "../../components/styles/index";
 
 const StyledHomePage = styled.div`
@@ -35,12 +36,13 @@ const HomePage = () => (
     <div className="heading">
       <h1>Welcome in the best to do app!</h1>
       <div className="links">
-        <StyledButton>
-          <Link to="/login">Log in</Link>
-        </StyledButton>
-        <StyledButton>
-          <Link to="/sign up">Sign up</Link>
-        </StyledButton>
+        <Link to="/login">
+          <StyledButton>Log in</StyledButton>
+        </Link>
+
+        <Link to="/signup">
+          <StyledButton>Sign up</StyledButton>
+        </Link>
       </div>
     </div>
   </StyledHomePage>

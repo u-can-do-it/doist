@@ -32,6 +32,7 @@ a {
   text-decoration: none;
   cursor: pointer;
   color: unset;
+  
 }
 
 button {

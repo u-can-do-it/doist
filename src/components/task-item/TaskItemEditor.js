@@ -7,8 +7,7 @@ import { FiFlag, FiBell } from "react-icons/fi";
 import { GoComment } from "react-icons/go";
 import { MdLabelOutline } from "react-icons/md";
 
-import Button from "../styles/Button";
-import ButtonCancel from "../styles/ButtonCancel";
+import { StyledButton, StyledButtonCancel } from "../styles/Button.styles";
 
 import DatePick from "../date-pick/DatePick";
 import TextArea from "../text-area/text-area";
@@ -86,7 +85,7 @@ const TaskItemEditor = ({ hide, task }) => {
     event.preventDefault();
     console.log(editedTask);
     addTask(editedTask);
-    hide()
+    hide();
   };
 
   const { name, deadline } = editedTask;
@@ -117,10 +116,10 @@ const TaskItemEditor = ({ hide, task }) => {
 
         <div className="controls">
           <div>
-            <Button type="submit"> AddTask</Button>
-            <ButtonCancel onClick={() => hide()} type="button">
+            <StyledButton type="submit"> AddTask</StyledButton>
+            <StyledButtonCancel onClick={() => hide()} type="button">
               Cancel
-            </ButtonCancel>
+            </StyledButtonCancel>
           </div>
 
           <div className="options">
