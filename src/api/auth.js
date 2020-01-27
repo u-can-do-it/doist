@@ -7,7 +7,7 @@ export const loginWithEmailAndPassword = (email, password) =>
   });
 
 export const signupWithEmailAndPassword = (email, password) =>
-  api.put("/users", {
+  api.post("/users", {
     email: email,
     password: password
   });

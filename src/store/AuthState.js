@@ -1,10 +1,10 @@
-import React, { createContext, useReducer, useContext } from "react";
+import React, { createContext, useReducer, useContext, useEffect } from "react";
 
 import {
   loginWithEmailAndPassword,
   signupWithEmailAndPassword
 } from "../api/auth";
-import { persistState, getPersistedState } from "../helpers/persistState";
+import { persistState, getPersistedState } from "../utils/persistState";
 import api from "../api/api";
 
 /* Action Types */
@@ -13,7 +13,8 @@ const types = {
   AUTH_OK: "AUTH_OK",
   AUTH_ERROR: "AUTH_ERROR",
   AUTH_LOGOUT: "AUTH_LOGOUT",
-  AUTH_NEW_ACCOUNT: "AUTH_NEW_ACCOUNT"
+  AUTH_NEW_ACCOUNT: "AUTH_NEW_ACCOUNT",
+  AUTH_CLEAR_ERROR: "AUTH_CLEAR_ERROR"
 };
 
 /* Define a context and a reducer for updating the context */
@@ -34,7 +35,8 @@ const reducer = (state, action) => {
     case types.AUTH_START:
       return {
         ...state,
-        isFetching: true
+        isFetching: true,
+        error: null
       };
 
     case types.AUTH_OK:
@@ -49,7 +51,8 @@ const reducer = (state, action) => {
       return {
         ...state,
         ...action.payload,
-        isFetching: false
+        isFetching: false,
+        error: null
       };
 
     case types.AUTH_ERROR:
@@ -69,6 +72,12 @@ const reducer = (state, action) => {
       return {
         ...state,
         ...action.payload
+      };
+
+    case types.AUTH_CLEAR_ERROR:
+      return {
+        ...state,
+        error: null
       };
 
     default:
@@ -91,6 +100,8 @@ export const AuthStateProvider = ({ children }) => {
 const useAuthState = () => {
   const [auth, dispatch] = useContext(AuthStateContext);
 
+  const clearError = () => dispatch({ type: types.AUTH_CLEAR_ERROR });
+
   const authLogin = async (email, password) => {
     dispatch({ type: types.AUTH_START });
     try {
@@ -101,25 +112,34 @@ const useAuthState = () => {
         payload: data
       });
     } catch (error) {
-      dispatch({
-        type: types.AUTH_ERROR,
-        payload: error.response
-      });
+      const data = error.response.data;
+      dispatch({ type: types.AUTH_ERROR, payload: data });
     }
   };
 
   const authLogout = () => dispatch({ type: types.AUTH_LOGOUT });
 
   const authCreateAccount = async (email, password) => {
-    const response = await signupWithEmailAndPassword(email, password);
-    console.log(response);
+    dispatch({ type: types.AUTH_START });
+    try {
+      const response = await signupWithEmailAndPassword(email, password);
+      const data = response.data;
+      dispatch({
+        type: types.AUTH_OK,
+        payload: data
+      });
+    } catch (error) {
+      const data = error.response.data;
+      dispatch({ type: types.AUTH_ERROR, payload: data });
+    }
   };
 
   return {
     auth,
     authLogin,
     authLogout,
-    authCreateAccount
+    authCreateAccount,
+    clearError
   };
 };
 

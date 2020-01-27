@@ -1,10 +1,12 @@
 import React from "react";
 
+import { StyledButton } from "../../components/styles/Button.styles";
+
 const Button = ({ disabled, handleClick, children }) => {
   return (
-    <button disabled={disabled} onClick={handleClick}>
+    <StyledButton disabled={disabled} onClick={handleClick}>
       {children}
-    </button>
+    </StyledButton>
   );
 };
 

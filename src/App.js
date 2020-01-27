@@ -1,34 +1,46 @@
 import React from "react";
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, Redirect } from "react-router-dom";
 
 import Layout from "./components/layout/Layout";
 import LoginPage from "./pages/login/LoginPage";
 import DashboardPage from "./pages/dashboard/DashboardPage";
-import WithProtectedRoute from "./hoc/WithProtectedRoute";
 
 import HomePage from "./pages/home/HomePage";
 import SinUpPage from "./pages/sign-up/SignUpPage";
+
+import ProtectedRoute from "./hoc/PortectedRoute";
 
 const App = () => {
   return (
     <>
       <Switch>
-        <WithProtectedRoute
+        <ProtectedRoute
+          path="/login"
+          component={LoginPage}
           redirectTo="/dashboard"
-          onlyGuest={true}
-          onlyUser={false}
-        >
-          <Route path="/home" component={HomePage} />
-          <Route path="/login" component={LoginPage} />
-          <Route path="/signup" component={SinUpPage} />
-        </WithProtectedRoute>
+          guestOnly={true}
+        />
+        <ProtectedRoute
+          path="/signup"
+          component={SinUpPage}
+          redirectTo="/dashboard"
+          guestOnly={true}
+        />
 
-        <WithProtectedRoute redirectTo="/login">
-          <Layout>
-            <Route path="/dashboard/:separator" component={DashboardPage} />
-            <Route path="/dashboard/" component={DashboardPage} />
-          </Layout>
-        </WithProtectedRoute>
+        <Layout>
+          <ProtectedRoute
+            path="/dashboard/:separator?"
+            component={DashboardPage}
+            redirectTo="/login"
+          />
+        </Layout>
+
+        <ProtectedRoute
+          path="/"
+          component={HomePage}
+          redirectTo="/dashboard"
+          guestOnly={true}
+        />
       </Switch>
     </>
   );

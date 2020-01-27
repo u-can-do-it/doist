@@ -9,7 +9,7 @@ import {
   saveExistingTask,
   executeTask
 } from "../api/data";
-import { TasksList } from "../helpers/TaskList";
+import { TasksList } from "../utils/TaskList";
 
 /* Action Types */
 const types = {
@@ -17,7 +17,8 @@ const types = {
   FETCH_OK: "FETCH_OK",
   FETCH_ERROR: "FETCH_ERROR",
   SET_FILTER: "SET_FILTER",
-  ADD_TASK: "ADD_TASK",
+  ADD_TASK_START: "ADD_TASK",
+  ADD_TASK_OK: "ADD_TASK_OK",
   DELETE_TASK: "DELETE_TASK"
 };
 
@@ -27,6 +28,7 @@ const TasksStateContext = createContext();
 const initialState = {
   tasks: null,
   isFetching: false,
+  isAdding: false,
   error: null,
   activeFilter: ""
 };
@@ -58,10 +60,17 @@ const tasksStateReducer = (state, action) => {
         activeFilter: action.payload
       };
 
-    case types.ADD_TASK:
+    case types.ADD_TASK_START:
+      return {
+        ...state,
+        isAdding: true
+      };
+
+    case types.ADD_TASK_OK:
       state.tasks.addTask(action.payload);
       return {
-        ...state
+        ...state,
+        isAdding: false
       };
 
     case types.DELETE_TASK:
@@ -108,10 +117,11 @@ const useTaskState = () => {
     dispatch({ type: types.SET_FILTER, payload: filter });
 
   const addTask = async task => {
+    dispatch({ type: types.ADD_TASK_START });
     try {
       const response = await saveNewTask(task, user.auth.token);
       const newTask = response.data;
-      dispatch({ type: types.ADD_TASK, payload: newTask });
+      dispatch({ type: types.ADD_TASK_OK, payload: newTask });
     } catch (error) {
       dispatch({ type: types.FETCH_ERROR, payload: error });
     }

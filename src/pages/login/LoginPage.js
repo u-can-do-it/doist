@@ -1,16 +1,29 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import FormInput from "../../components/form-input/FormInput";
 
 import useAuthState from "../../store/AuthState";
 import { Link } from "react-router-dom";
-import { StyledButton } from "../../components/styles/Button.styles";
+import ButtonWithSpinner from "../../components/ui/ButtonWithSpinner";
 import { StyledAuthForm } from "../../components/styles/AuthForm.styles";
 import { StyledAuthPage } from "../../components/styles/AuthPage.styles";
 
 const LoginPage = () => {
   const authState = useAuthState();
   const { auth, authLogin } = authState;
+
+  let [error, setError] = useState(null);
+  let [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => authState.clearError(), []);
+
+  useEffect(() => {
+    const set = () => {
+      setError(auth.error);
+      setIsLoading(auth.isFetching);
+    };
+    set();
+  }, [auth.error, auth.isFetching]);
 
   const [form, setForm] = useState({
     email: "",
@@ -26,7 +39,6 @@ const LoginPage = () => {
 
   const handleSubmit = event => {
     event.preventDefault();
-    console.log(form);
     authLogin(email, password);
   };
   return (
@@ -53,7 +65,10 @@ const LoginPage = () => {
             label="Password"
             required
           />
-          <StyledButton type="submit">LOG IN</StyledButton>
+          {error ? <p>{error}</p> : null}
+          <ButtonWithSpinner type="submit" isLoading={isLoading}>
+            Log in
+          </ButtonWithSpinner>
           <p>
             Don't have an account yet? <Link to="/signup">Sign up</Link>
           </p>

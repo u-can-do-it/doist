@@ -1,15 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import useAuthState from "../../store/AuthState";
 
 import { Link } from "react-router-dom";
-import { StyledButton } from "../../components/styles/Button.styles";
 import { StyledAuthForm } from "../../components/styles/AuthForm.styles";
 import { StyledAuthPage } from "../../components/styles/AuthPage.styles";
 import FormInput from "../../components/form-input/FormInput";
+import ButtonWithSpinner from "../../components/ui/ButtonWithSpinner";
 
 const SignUpPage = () => {
-  const auth = useAuthState();
+  const authState = useAuthState();
+
   const [form, setForm] = useState({
     email: "",
     password: "",
@@ -27,6 +28,19 @@ const SignUpPage = () => {
     isValid
   } = form;
 
+  let [error, setError] = useState(null);
+  let [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => authState.clearError(), []);
+
+  useEffect(() => {
+    const set = () => {
+      setError(authState.auth.error);
+      setIsLoading(authState.auth.isFetching);
+    };
+    set();
+  }, [authState.auth.error, authState.auth.isFetching]);
+
   const handleSubmit = event => {
     event.preventDefault();
 
@@ -36,7 +50,8 @@ const SignUpPage = () => {
     }
 
     if (isValid) {
-      auth.authCreateAccount(email, password);
+      setForm({ ...form, password2Feedback: null });
+      authState.authCreateAccount(email, password);
     }
   };
 
@@ -125,8 +140,11 @@ const SignUpPage = () => {
             required
             feedback={password2Feedback}
           />
+          {error ? <p>{error}</p> : null}
+          <ButtonWithSpinner type="submit" isLoading={isLoading}>
+            Create
+          </ButtonWithSpinner>
 
-          <StyledButton type="submit">Create</StyledButton>
           <p>
             If You have an account go to <Link to="/login">Log in</Link>
           </p>
@@ -135,4 +153,5 @@ const SignUpPage = () => {
     </StyledAuthPage>
   );
 };
+
 export default SignUpPage;

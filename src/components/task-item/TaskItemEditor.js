@@ -7,7 +7,8 @@ import { FiFlag, FiBell } from "react-icons/fi";
 import { GoComment } from "react-icons/go";
 import { MdLabelOutline } from "react-icons/md";
 
-import { StyledButton, StyledButtonCancel } from "../styles/Button.styles";
+import { StyledButtonCancel } from "../styles/Button.styles";
+import ButtonWithSpinner from "../../components/ui/ButtonWithSpinner";
 
 import DatePick from "../date-pick/DatePick";
 import TextArea from "../text-area/text-area";
@@ -60,6 +61,7 @@ const StyledTaskEditor = styled.div`
 
 const TaskItemEditor = ({ hide, task }) => {
   const [isDatePickerOn, setIsDatePickerOn] = useState(false);
+  const [isAdding, setIsAdding] = useState(false);
   const { addTask } = useTaskState();
 
   const [editedTask, setEditedTask] = useState(
@@ -81,10 +83,11 @@ const TaskItemEditor = ({ hide, task }) => {
     setEditedTask({ ...editedTask, deadline: date });
   };
 
-  const handleSubmit = event => {
+  const handleSubmit = async event => {
     event.preventDefault();
-    console.log(editedTask);
-    addTask(editedTask);
+    setIsAdding(true);
+    await addTask(editedTask);
+
     hide();
   };
 
@@ -116,7 +119,10 @@ const TaskItemEditor = ({ hide, task }) => {
 
         <div className="controls">
           <div>
-            <StyledButton type="submit"> AddTask</StyledButton>
+            <ButtonWithSpinner type="submit" isLoading={isAdding}>
+              {" "}
+              Add Task
+            </ButtonWithSpinner>
             <StyledButtonCancel onClick={() => hide()} type="button">
               Cancel
             </StyledButtonCancel>

@@ -31,11 +31,11 @@ const StyledContentContainer = styled.div`
 const DashboardPage = ({ match }) => {
   const taskState = useTaskState();
   const { tasks, isFetching } = taskState;
+
   useEffect(() => {
     const fetch = () => taskState.fetchTasks();
 
     fetch();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const separator = match.params.separator;
