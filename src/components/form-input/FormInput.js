@@ -19,13 +19,13 @@ const StyledFormInput = styled.div`
   }
 `;
 
-const FormInput = ({ handleChange, label, feedback, ...otherProps }) => (
+const FormInput = ({ handleChange, label, feedback, ...rest }) => (
   <StyledFormInput>
     {label ? <label>{label}</label> : null}
     <input
       className="form-input"
       onChange={event => handleChange(event)}
-      {...otherProps}
+      {...rest}
     />
     {feedback ? <p>{feedback}</p> : null}
   </StyledFormInput>

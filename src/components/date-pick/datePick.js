@@ -29,7 +29,9 @@ const StyledDatePicker = styled.div`
   }
 `;
 
-const DatePick = ({ date = new Date(), onDatePick }) => {
+const DatePick = ({ currentDate, onDatePick }) => {
+  console.log(currentDate);
+  const date = currentDate instanceof Date ? currentDate : new Date();
   const monthName = date.toLocaleString("en-us", { month: "long" });
   const dayName = date.toLocaleString("en-us", { weekday: "long" });
   const dayNumber = date.getDate();
@@ -51,22 +53,30 @@ const DatePick = ({ date = new Date(), onDatePick }) => {
         name="Today"
         details={dayName}
         onClick={() => onDatePick(today)}
+        type="button"
       />
       <OptionButton
         icon={<GiCutDiamond />}
         name="Tomorrow"
         details={tomorrowDayName}
         onClick={() => onDatePick(tomorrow)}
+        type="button"
       />
       <OptionButton
         icon={<MdNextWeek />}
         name="Nex week"
         details={nextWeekDay}
         onClick={() => onDatePick(nextWeek)}
+        type="button"
       />
-      <OptionButton icon={<MdDoNotDisturbAlt />} name="No date" />
+      <OptionButton
+        icon={<MdDoNotDisturbAlt />}
+        name="No date"
+        type="button"
+        onClick={() => onDatePick("")}
+      />
       <Calendar
-        activeStartDate={today}
+        activeStartDate={date}
         defaultActiveStartDate={today}
         minDate={today}
         value={date}

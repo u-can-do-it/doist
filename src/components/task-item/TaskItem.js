@@ -28,14 +28,11 @@ const StyledTaskContent = styled.div`
   width: 100%;
   padding: 2px 0 0 14px;
   line-height: 1.8rem;
+  cursor: pointer;
 
   .date {
     color: red;
     margin-top: 3px;
-  }
-
-  .name {
-    cursor: pointer;
   }
 `;
 
@@ -51,17 +48,21 @@ const TaskItem = ({ task }) => {
   const handleEditOn = () => setIsEditMode(true);
   const handleEditOff = () => setIsEditMode(false);
 
-  console.log("itemsrender");
   const taskItem = (
     <>
       <div>
         <Checkbox handleCheck={handleTaskDelete} />
       </div>
-      <StyledTaskContent>
-        <p className="name" onClick={handleEditOn}>
-          {name}
+      <StyledTaskContent onClick={handleEditOn}>
+        <p className="name">{name}</p>
+        <p className="date">
+          {deadline
+            ? new Date(deadline).toLocaleString("en-GB", {
+                day: "numeric",
+                month: "long"
+              })
+            : null}
         </p>
-        <p className="date">{deadline}</p>
       </StyledTaskContent>
 
       <div className="menu">

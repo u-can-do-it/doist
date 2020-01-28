@@ -19,7 +19,10 @@ const types = {
   SET_FILTER: "SET_FILTER",
   ADD_TASK_START: "ADD_TASK",
   ADD_TASK_OK: "ADD_TASK_OK",
-  DELETE_TASK: "DELETE_TASK"
+  DELETE_TASK: "DELETE_TASK",
+  TASK_EDIT_START: "TASK_EDIT_START",
+  TASK_EDIT_OK: "TASK_EDIT_OK",
+  TASK_EDIT_ERROR: "TASK_EDIT_ERROR"
 };
 
 /* Define a context and a reducer for updating the context */
@@ -78,8 +81,20 @@ const tasksStateReducer = (state, action) => {
       return {
         ...state
       };
+    case types.TASK_EDIT_START:
+      return {};
+
+    case types.TASK_EDIT_OK:
+      state.tasks.editTask(action.payload);
+      return {
+        ...state
+      };
+    case types.TASK_EDIT_ERROR:
+      return {
+        ...state,
+        error: action.payload
+      };
     default:
-      console.log("Koń Rafaaaał");
       return state;
   }
 };
@@ -138,9 +153,9 @@ const useTaskState = () => {
   const editTask = async task => {
     try {
       await saveExistingTask(task, user.auth.token);
-      dispatch({ type: types.DELETE_TASK, payload: task });
+      dispatch({ type: types.TASK_EDIT_OK, payload: task });
     } catch (error) {
-      console.log(error);
+      dispatch({ type: types.TASK_EDIT_OK, payload: error.data });
     }
   };
 

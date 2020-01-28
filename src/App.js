@@ -27,6 +27,12 @@ const App = () => {
           guestOnly={true}
         />
 
+        <ProtectedRoute
+          path="/"
+          component={HomePage}
+          redirectTo="/dashboard"
+          exact
+        />
         <Layout>
           <ProtectedRoute
             path="/dashboard/:separator?"
@@ -34,13 +40,6 @@ const App = () => {
             redirectTo="/login"
           />
         </Layout>
-
-        <ProtectedRoute
-          path="/"
-          component={HomePage}
-          redirectTo="/dashboard"
-          guestOnly={true}
-        />
       </Switch>
     </>
   );

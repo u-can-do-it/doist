@@ -26,11 +26,5 @@ export const saveExistingTask = (task, token) =>
 
 export const executeTask = (task, token) => {
   task.archived = true;
-  console.log(task);
-  return api.put(`/tasks/${task._id}`, task, {
-    headers: {
-      "Content-Type": "application/json",
-      "X-Auth-Token": token
-    }
-  });
+  return saveExistingTask(task, token);
 };

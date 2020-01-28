@@ -14,6 +14,7 @@ import DatePick from "../date-pick/DatePick";
 import TextArea from "../text-area/text-area";
 import Task from "../../models/Task";
 import useTaskState from "../../store/TaskState";
+import CatchOutsideClick from "../../hoc/CartchOutsideClick";
 
 const StyledTaskEditor = styled.div`
   max-width: 62.8rem;
@@ -27,10 +28,15 @@ const StyledTaskEditor = styled.div`
     position: relative;
   }
 
-  .date-pick-button {
+  .date-field {
     max-width: 20.2rem;
     width: 100%;
     border-left: 1px solid grey;
+
+    .date-pick-button {
+      width: 100%;
+      height: 100%;
+    }
   }
 
   .controls {
@@ -62,7 +68,8 @@ const StyledTaskEditor = styled.div`
 const TaskItemEditor = ({ hide, task }) => {
   const [isDatePickerOn, setIsDatePickerOn] = useState(false);
   const [isAdding, setIsAdding] = useState(false);
-  const { addTask } = useTaskState();
+  const { addTask, editTask } = useTaskState();
+  const isTaskEditing = !!task;
 
   const [editedTask, setEditedTask] = useState(
     task
@@ -79,14 +86,18 @@ const TaskItemEditor = ({ hide, task }) => {
   };
 
   const handleDateEdit = date => {
-    console.log(date);
     setEditedTask({ ...editedTask, deadline: date });
+    setIsDatePickerOn(false);
   };
 
   const handleSubmit = async event => {
     event.preventDefault();
     setIsAdding(true);
-    await addTask(editedTask);
+    if (editedTask._id) {
+      await editTask(editedTask);
+    } else {
+      await addTask(editedTask);
+    }
 
     hide();
   };
@@ -94,8 +105,10 @@ const TaskItemEditor = ({ hide, task }) => {
   const { name, deadline } = editedTask;
 
   const datePicker = isDatePickerOn ? (
-    <div className="date-pick" onBlur={() => setIsDatePickerOn(false)}>
-      <DatePick onDatePick={handleDateEdit} />
+    <div className="date-pick">
+      <CatchOutsideClick onOutsideClick={() => setIsDatePickerOn(false)}>
+        <DatePick onDatePick={handleDateEdit} currentDate={deadline} />
+      </CatchOutsideClick>
     </div>
   ) : null;
 
@@ -104,24 +117,25 @@ const TaskItemEditor = ({ hide, task }) => {
       <form onSubmit={event => handleSubmit(event)}>
         <div className="frame">
           <TextArea name={"name"} value={name} handleChange={handleTaskEdit} />
-          <button
-            className="date-pick-button"
-            type="button"
-            onClick={() => setIsDatePickerOn(true)}
-          >
-            {deadline.toLocaleString("en-us", {
-              day: "numeric",
-              month: "long"
-            })}
-          </button>
-          {datePicker}
+          <div className="date-field">
+            <button
+              className="date-pick-button"
+              type="button"
+              onClick={() => setIsDatePickerOn(true)}
+            >
+              {deadline.toLocaleString("en-us", {
+                day: "numeric",
+                month: "long"
+              })}
+            </button>
+            {datePicker}
+          </div>
         </div>
 
         <div className="controls">
           <div>
             <ButtonWithSpinner type="submit" isLoading={isAdding}>
-              {" "}
-              Add Task
+              {isTaskEditing ? "Save" : "Add Task"}
             </ButtonWithSpinner>
             <StyledButtonCancel onClick={() => hide()} type="button">
               Cancel

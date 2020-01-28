@@ -22,19 +22,13 @@ const StyledLeftMenu = styled.div`
 
 const LeftMenu = () => {
   const { tasks } = useTaskState();
-  console.log(tasks);
   return (
     <StyledLeftMenu>
       <div>
         <ul>
           {TASK_SEPARATORS.map(({ icon, key, name }) => (
             <Link to={`/dashboard/${key}`} key={key}>
-              <FilterButton
-                filter={key}
-                name={name}
-                icon={icon}
-                details={tasks ? tasks[key].length : null}
-              />
+              <FilterButton filter={key} name={name} icon={icon} />
             </Link>
           ))}
         </ul>
