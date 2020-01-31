@@ -30,7 +30,6 @@ const StyledDatePicker = styled.div`
 `;
 
 const DatePick = ({ currentDate, onDatePick }) => {
-  console.log(currentDate);
   const date = currentDate instanceof Date ? currentDate : new Date();
   const monthName = date.toLocaleString("en-us", { month: "long" });
   const dayName = date.toLocaleString("en-us", { weekday: "long" });
