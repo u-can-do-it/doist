@@ -4,6 +4,7 @@ import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import { AuthStateProvider } from "./store/AuthState";
 import { TasksStateProvider } from "./store/TaskState";
+import { LayoutStateProvider } from "./store/LayoutState";
 import { BrowserRouter } from "react-router-dom";
 import GlobalStyle from "./components/styles/GlobalStyles";
 import { ThemeProvider } from "styled-components";
@@ -12,12 +13,14 @@ import { theme } from "./components/styles/Theme";
 const app = (
   <AuthStateProvider>
     <TasksStateProvider>
-      <BrowserRouter>
-        <GlobalStyle />
-        <ThemeProvider theme={theme}>
-          <App />
-        </ThemeProvider>
-      </BrowserRouter>
+      <LayoutStateProvider>
+        <BrowserRouter>
+          <GlobalStyle />
+          <ThemeProvider theme={theme}>
+            <App />
+          </ThemeProvider>
+        </BrowserRouter>
+      </LayoutStateProvider>
     </TasksStateProvider>
   </AuthStateProvider>
 );

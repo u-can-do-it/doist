@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from "react";
 
-const CatchOutsideClick = ({ children, onOutsideClick }) => {
+const CatchOutsideClick = ({ children, onOutsideClick, ...rest }) => {
   const wrapperRef = useRef();
 
   const handleClickOutside = event => {
@@ -13,7 +13,11 @@ const CatchOutsideClick = ({ children, onOutsideClick }) => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   });
-  return <div ref={wrapperRef}>{children}</div>;
+  return (
+    <div ref={wrapperRef} {...rest}>
+      {children}
+    </div>
+  );
 };
 
 export default CatchOutsideClick;

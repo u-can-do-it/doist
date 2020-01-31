@@ -15,15 +15,18 @@ const LoginPage = () => {
   let [error, setError] = useState(null);
   let [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => authState.clearError(), []);
-
   useEffect(() => {
     const set = () => {
       setError(auth.error);
       setIsLoading(auth.isFetching);
     };
     set();
+
+    // eslint-disable-next-line
   }, [auth.error, auth.isFetching]);
+
+  // eslint-disable-next-line
+  useEffect(() => authState.clearError(), []);
 
   const [form, setForm] = useState({
     email: "",

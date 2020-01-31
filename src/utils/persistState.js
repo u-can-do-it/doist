@@ -3,3 +3,5 @@ export const persistState = (state, key) => {
 };
 
 export const getPersistedState = key => JSON.parse(localStorage.getItem(key));
+
+export const deletePersistedState = key => localStorage.removeItem(key);

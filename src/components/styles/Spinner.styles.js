@@ -1,11 +1,12 @@
 import styled from "styled-components";
 
 export const StyledSpinner = styled.div`
-  display: inline-block;
+  display: block;
+  margin: 0 auto;
   width: ${props => (props.small ? "13px" : "50px")};
   height: ${props => (props.small ? "13px" : "50px")};
 
-  border: 3px solid rgba(2, 195, 195, 0.6);
+  border: 3px solid black;
   border-radius: 50%;
   border-top-color: #636767;
   animation: spin 1s ease-in-out infinite;

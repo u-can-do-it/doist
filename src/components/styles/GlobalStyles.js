@@ -36,7 +36,7 @@ a {
 }
 
 button {
-  background-color: unset;
+ background-color:transparent;
   border: unset;
 
   &:hover{

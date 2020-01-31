@@ -1,5 +1,5 @@
 import React from "react";
-import { StyledSpinner, StyledDots } from "../styles/Spinner.styles";
+import { StyledSpinner } from "../styles/Spinner.styles";
 
 const WithSpinner = ({ children, isLoading, ...rest }) => {
   const spinner = <StyledSpinner {...rest} />;

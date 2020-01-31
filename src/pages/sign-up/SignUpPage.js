@@ -31,15 +31,18 @@ const SignUpPage = () => {
   let [error, setError] = useState(null);
   let [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => authState.clearError(), []);
-
   useEffect(() => {
     const set = () => {
       setError(authState.auth.error);
       setIsLoading(authState.auth.isFetching);
     };
     set();
+
+    // eslint-disable-next-line
   }, [authState.auth.error, authState.auth.isFetching]);
+
+  // eslint-disable-next-line
+  useEffect(() => authState.clearError(), []);
 
   const handleSubmit = event => {
     event.preventDefault();

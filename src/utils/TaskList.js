@@ -58,5 +58,7 @@ export class TasksList {
   editTask(editedTask) {
     const index = this.inbox.findIndex(task => task._id === editedTask._id);
     this.inbox[index] = editedTask;
+    this.next_7 = this.sort(this.inbox);
+    this.today = this.next_7[this.todayDate.format(this.format)] || [];
   }
 }

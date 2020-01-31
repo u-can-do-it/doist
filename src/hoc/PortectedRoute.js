@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useLayoutEffect } from "react";
+import React, { useState, useLayoutEffect } from "react";
 import { Redirect, Route } from "react-router-dom";
 import useAuthState from "../store/AuthState";
 
@@ -16,6 +16,7 @@ const ProtectedRoute = ({
   useLayoutEffect(() => {
     const logedIn = !!auth.token;
     setShouldRedirect(!(logedIn === !guestOnly));
+    // eslint-disable-next-line
   }, [auth]);
 
   return (

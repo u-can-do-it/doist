@@ -14,7 +14,7 @@ import DatePick from "../date-pick/DatePick";
 import TextArea from "../text-area/text-area";
 import Task from "../../models/Task";
 import useTaskState from "../../store/TaskState";
-import CatchOutsideClick from "../../hoc/CartchOutsideClick";
+import CatchOutsideClick from "../../hoc/CatchOutsideClick";
 
 const StyledTaskEditor = styled.div`
   max-width: 62.8rem;

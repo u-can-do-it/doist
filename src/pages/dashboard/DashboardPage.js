@@ -1,8 +1,6 @@
 import React, { useEffect } from "react";
 import useTaskState from "../../store/TaskState";
 
-import LeftMenu from "../../components/left-menu/LeftMenu";
-
 import styled from "styled-components";
 
 import WithSpinner from "../../components/with-spinner/with-spinner";
@@ -10,22 +8,20 @@ import ListWithHeader from "../../components/tasks-list/ListWithHeader";
 
 const StyledDashboard = styled.div`
   border-right: 1px solid #f1f1f1;
-  min-height: 100vh;
-  padding-top: 4.4rem;
   background-color: white;
-
+  background-color: #fafafafa;
   h1 {
     margin-bottom: 8px;
   }
 `;
 
 const StyledContentContainer = styled.div`
-  margin-left: 23.5rem;
   height: 100%;
-  padding-top: 3rem;
-  padding-left: 44px;
-  padding-right: 14px;
-  padding-bottom: 84px;
+  min-height: 100vh;
+  padding: 5.5rem 2rem 4rem;
+  background-color: #fff;
+  transition: all 0.2s;
+  width: 100%;
 `;
 
 const DashboardPage = ({ match }) => {
@@ -36,6 +32,7 @@ const DashboardPage = ({ match }) => {
     const fetch = () => taskState.fetchTasks();
 
     fetch();
+    // eslint-disable-next-line
   }, []);
 
   const separator = match.params.separator;
@@ -57,7 +54,6 @@ const DashboardPage = ({ match }) => {
         header = "Next 7 days";
         const tasksList = tasks.next_7;
         const days = Object.keys(tasksList);
-        console.log(tasks.next_7);
         list = days.reduce(
           (acc, day, index) =>
             (acc = [
@@ -74,10 +70,9 @@ const DashboardPage = ({ match }) => {
 
   return (
     <StyledDashboard>
-      <LeftMenu />
       <StyledContentContainer>
         <h1>{header}</h1>
-        <WithSpinner isLoading={isFetching}>{list} </WithSpinner>
+        <WithSpinner isLoading={isFetching}>{list}</WithSpinner>
       </StyledContentContainer>
     </StyledDashboard>
   );

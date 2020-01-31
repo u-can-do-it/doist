@@ -1,11 +1,14 @@
-import React, { createContext, useReducer, useContext, useEffect } from "react";
+import React, { createContext, useReducer, useContext } from "react";
 
 import {
   loginWithEmailAndPassword,
   signupWithEmailAndPassword
 } from "../api/auth";
-import { persistState, getPersistedState } from "../utils/persistState";
-import api from "../api/api";
+import {
+  persistState,
+  getPersistedState,
+  deletePersistedState
+} from "../utils/persistState";
 
 /* Action Types */
 const types = {
@@ -20,15 +23,15 @@ const types = {
 /* Define a context and a reducer for updating the context */
 const AuthStateContext = createContext();
 
-const persistedState = getPersistedState("auth");
 const initialState = {
   email: null,
   _id: null,
   token: null,
   error: null,
-  isFetching: false,
-  ...persistedState
+  isFetching: false
 };
+
+const persistedState = { ...initialState, ...getPersistedState("auth") };
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -63,8 +66,8 @@ const reducer = (state, action) => {
       };
 
     case types.AUTH_LOGOUT:
+      deletePersistedState("auth");
       return {
-        ...state,
         ...initialState
       };
 
@@ -88,7 +91,7 @@ const reducer = (state, action) => {
 /* Export a component to provide the context to its children. */
 
 export const AuthStateProvider = ({ children }) => {
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const [state, dispatch] = useReducer(reducer, persistedState);
 
   return (
     <AuthStateContext.Provider value={[state, dispatch]}>

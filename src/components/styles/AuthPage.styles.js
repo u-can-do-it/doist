@@ -10,6 +10,7 @@ export const StyledAuthPage = styled.div`
   .container {
     ${popupWindow}
     max-width:300px;
+    width: 100%;
     position: absolute;
     top: 40%;
     left: 50%;
