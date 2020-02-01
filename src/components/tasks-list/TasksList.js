@@ -1,14 +1,5 @@
 import React from "react";
-import {
-  useParams,
-  HashRouter,
-  Route,
-  Switch,
-  Link,
-  useRouteMatch,
-  useLocation,
-  Router
-} from "react-router-dom";
+import { Route, useRouteMatch } from "react-router-dom";
 
 import TaskItem from "../task-item/TaskItem";
 import useTaskState from "../../store/TaskState";
@@ -20,14 +11,12 @@ const TasksList = () => {
   const { tasks = [], isFetching } = taskState;
   let match = useRouteMatch();
 
-  console.log(match.path);
   return (
     <div>
       <Route
         path={`${match.path}/:name`}
         render={({ match }) => (
           <div>
-            {" "}
             <h3> {match.params.name} </h3>
           </div>
         )}

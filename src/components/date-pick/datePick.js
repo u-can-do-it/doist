@@ -43,7 +43,7 @@ const DatePick = ({ currentDate, onDatePick }) => {
   const tomorrowDayName = tomorrow.toLocaleString("en-us", { weekday: "long" });
 
   return (
-    <StyledDatePicker onBlur={() => console.log("blur")}>
+    <StyledDatePicker>
       <h4 className="header">
         {dayNumber} {monthName}
       </h4>

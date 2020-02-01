@@ -46,7 +46,7 @@ const DashboardPage = ({ match }) => {
           <ListWithHeader
             list={tasks.today}
             header={"Today"}
-            subHeader={"17 styczeń"}
+            subHeader={""}
           />
         );
         break;

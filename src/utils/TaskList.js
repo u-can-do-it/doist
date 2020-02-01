@@ -62,3 +62,17 @@ export class TasksList {
     this.today = this.next_7[this.todayDate.format(this.format)] || [];
   }
 }
+
+const dateKeysProvider = () => {
+  const day = new Date();
+  const dateKeys = { overdue: [] };
+
+  for (let i = 0; i < 7; i++) {
+    dateKeys[day.toLocaleDateString()] = [];
+    day.setDate(day.getDate() + 1); // next day
+  }
+  dateKeys.later = [];
+  return dateKeys;
+};
+
+class ListTask {}
