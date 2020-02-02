@@ -60,7 +60,7 @@ const Navigation = () => {
           <BurgerButton
             className="mobile-icon"
             onClick={() => layout.toggleSidebarOpen()}
-            active={layout.layoutState.isSidebarOpen}
+            isActive={layout.layoutState.isSidebarOpen}
           />
           <MdFeaturedPlayList className="desktop-icon" />
         </div>

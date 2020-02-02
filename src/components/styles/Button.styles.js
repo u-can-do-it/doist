@@ -81,24 +81,10 @@ const StyledBurgerButton = styled.div`
 
 export const BurgerButton = ({
   onClick = function() {},
-  active = false,
+  isActive,
   ...rest
-}) => {
-  const [isActive, setIsActive] = useState(active);
-  useEffect(() => setIsActive(active), [active]);
-
-  const handleToggleActive = () => {
-    setIsActive(!isActive);
-    onClick();
-  };
-
-  return (
-    <StyledBurgerButton
-      onClick={handleToggleActive}
-      isActive={isActive}
-      {...rest}
-    >
-      <button />
-    </StyledBurgerButton>
-  );
-};
+}) => (
+  <StyledBurgerButton onClick={onClick} isActive={isActive} {...rest}>
+    <button />
+  </StyledBurgerButton>
+);
