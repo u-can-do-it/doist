@@ -51,7 +51,7 @@ const StyledNavigation = styled.div`
 `;
 
 const Navigation = () => {
-  const layoutState = useLayoutState();
+  const layout = useLayoutState();
 
   return (
     <StyledNavigation>
@@ -59,7 +59,8 @@ const Navigation = () => {
         <div>
           <BurgerButton
             className="mobile-icon"
-            onClick={() => layoutState.toggleSidebarOpen()}
+            onClick={() => layout.toggleSidebarOpen()}
+            active={layout.layoutState.isSidebarOpen}
           />
           <MdFeaturedPlayList className="desktop-icon" />
         </div>

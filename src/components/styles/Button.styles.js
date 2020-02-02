@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 
 export const StyledButton = styled.button`
@@ -79,8 +79,13 @@ const StyledBurgerButton = styled.div`
   }
 `;
 
-export const BurgerButton = ({ onClick = function() {}, ...rest }) => {
-  const [isActive, setIsActive] = useState(false);
+export const BurgerButton = ({
+  onClick = function() {},
+  active = false,
+  ...rest
+}) => {
+  const [isActive, setIsActive] = useState(active);
+  useEffect(() => setIsActive(active), [active]);
 
   const handleToggleActive = () => {
     setIsActive(!isActive);

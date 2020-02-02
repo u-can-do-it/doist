@@ -22,7 +22,6 @@ const Layout = ({ children }) => {
   return (
     <>
       <Navigation />
-
       <StyledWrapper>
         <Sidebar />
         <StyledContent>{children}</StyledContent>

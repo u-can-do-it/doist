@@ -37,17 +37,13 @@ const DashboardPage = ({ match }) => {
 
   const separator = match.params.separator;
   let list = [];
-  let header = "inbox";
+  let header = "";
   if (tasks) {
     switch (separator) {
       case "today":
         header = "Today";
         list = (
-          <ListWithHeader
-            list={tasks.today}
-            header={"Today"}
-            subHeader={""}
-          />
+          <ListWithHeader list={tasks.today} header={"Today"} subHeader={""} />
         );
         break;
       case "next_7":
@@ -64,7 +60,8 @@ const DashboardPage = ({ match }) => {
         );
         break;
       default:
-        list = <ListWithHeader list={tasks.inbox} header={"inbox"} />;
+        list = <ListWithHeader list={tasks.inbox} header={"Inbox"} />;
+        header = "Inbox";
     }
   }
 
