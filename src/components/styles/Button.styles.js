@@ -84,7 +84,7 @@ export const BurgerButton = ({
   isActive,
   ...rest
 }) => (
-  <StyledBurgerButton onClick={onClick} isActive={isActive}>
-    <button {...rest} />
+  <StyledBurgerButton onClick={onClick} isActive={isActive} {...rest}>
+    <button />
   </StyledBurgerButton>
 );

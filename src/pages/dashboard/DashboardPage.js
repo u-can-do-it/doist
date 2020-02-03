@@ -62,9 +62,9 @@ const DashboardPage = ({ match }) => {
       case "next_7":
         header = "Next 7 days";
         const tasksList = tasks.list;
-        console.log(tasksList);
+
         const keys = tasks.dateKeys;
-        console.log(keys);
+
         list = keys.reduce(
           (acc, day, index) =>
             (acc = [

@@ -63,10 +63,7 @@
 //   }
 // }
 
-const daysBetween = (day1, day2) => {
-  console.log((day2 - day1) / 86400000);
-  return Math.ceil((day1 - day2) / 86400000);
-};
+const daysBetween = (day1, day2) => Math.ceil((day1 - day2) / 86400000);
 
 export class TasksList {
   dateKeys = [];

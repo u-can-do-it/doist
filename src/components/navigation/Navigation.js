@@ -46,6 +46,7 @@ const StyledNavigation = styled.div`
     display: none;
     @media ${device.tablet} {
       display: block;
+      color: red;
     }
   }
 `;
