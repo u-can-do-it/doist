@@ -5,6 +5,7 @@ import styled from "styled-components";
 
 import WithSpinner from "../../components/with-spinner/with-spinner";
 import ListWithHeader from "../../components/tasks-list/ListWithHeader";
+import AddTask from "../../components/add-task/AddTask";
 
 const StyledDashboard = styled.div`
   border-right: 1px solid #f1f1f1;
@@ -43,14 +44,28 @@ const DashboardPage = ({ match }) => {
       case "today":
         header = "Today";
         list = (
-          <ListWithHeader list={tasks.today} header={"Today"} subHeader={""} />
+          <>
+            <ListWithHeader
+              list={tasks.overdueTasks}
+              header={"Overdue"}
+              key={"overdue"}
+            />
+            <ListWithHeader
+              list={tasks.todayTasks}
+              header={"Today"}
+              key={"today"}
+            />
+          </>
         );
+
         break;
       case "next_7":
         header = "Next 7 days";
-        const tasksList = tasks.next_7;
-        const days = Object.keys(tasksList);
-        list = days.reduce(
+        const tasksList = tasks.list;
+        console.log(tasksList);
+        const keys = tasks.dateKeys;
+        console.log(keys);
+        list = keys.reduce(
           (acc, day, index) =>
             (acc = [
               ...acc,
@@ -60,7 +75,12 @@ const DashboardPage = ({ match }) => {
         );
         break;
       default:
-        list = <ListWithHeader list={tasks.inbox} header={"Inbox"} />;
+        list = (
+          <>
+            <ListWithHeader list={tasks.inbox} />
+          </>
+        );
+
         header = "Inbox";
     }
   }
@@ -70,6 +90,7 @@ const DashboardPage = ({ match }) => {
       <StyledContentContainer>
         <h1>{header}</h1>
         <WithSpinner isLoading={isFetching}>{list}</WithSpinner>
+        <AddTask />
       </StyledContentContainer>
     </StyledDashboard>
   );

@@ -1,16 +1,17 @@
 import React from "react";
 import styled from "styled-components";
 import TaskItem from "../task-item/TaskItem";
-import AddTask from "../add-task/AddTask";
 
-const StyledListHeader = styled.h2`
-  font-size: 1.4rem;
-  font-weight: bold;
-  color: #202020;
-  border-bottom: 1px solid #f0f0f0;
-  padding-bottom: 0.5rem;
+const StyledListWithHeader = styled.div`
+  h2 {
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #202020;
+    border-bottom: 1px solid #f0f0f0;
+    padding-bottom: 0.5rem;
 
-  margin-bottom: 0;
+    margin-bottom: 0;
+  }
 
   .subtitle {
     color: #808080;
@@ -18,23 +19,22 @@ const StyledListHeader = styled.h2`
     font-size: 1.1rem;
     font-weight: normal;
   }
+
+  margin-bottom: 1rem;
 `;
 
 const ListWithHeader = ({ header = "", subHeader = "", list = [] }) => (
-  <div>
-    <StyledListHeader>
+  <StyledListWithHeader>
+    <h2>
       {header}
       <span className="subtitle">{subHeader}</span>
-    </StyledListHeader>
+    </h2>
     <ul>
       {list.map(item => (
         <TaskItem task={item} key={item._id} />
       ))}
-      <li className="add-task">
-        <AddTask />
-      </li>
     </ul>
-  </div>
+  </StyledListWithHeader>
 );
 
 export default ListWithHeader;
