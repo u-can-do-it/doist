@@ -14,13 +14,13 @@ Clone project and use command:
 npm install
 ```
 
-To run app type command
+Run on local server:
 
 ```bash
 npm start
 ```
 
-Production build of app:
+Production build:
 
 ```bash
 npm run build
