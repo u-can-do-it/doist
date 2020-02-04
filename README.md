@@ -1,6 +1,6 @@
 ## DOIST
 
-### [Live](https://u-can-do-it.github.io/logo/)
+### [Live](https://u-can-do-it.github.io/doist/)
 
 This application was built using create-react-app as a base, and the technologies used were React (Custom Hooks, Context), Axios, Styled Componets.
 
