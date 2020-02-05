@@ -73,6 +73,7 @@ const DatePick = ({ currentDate, onDatePick }) => {
         name="No date"
         type="button"
         onClick={() => onDatePick("")}
+        disabled={true}
       />
       <Calendar
         activeStartDate={date}

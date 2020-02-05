@@ -1,6 +1,5 @@
 import styled from "styled-components";
-import React, { useEffect } from "react";
-import { useState } from "react";
+import React from "react";
 
 export const StyledButton = styled.button`
   border-color: #b0281a;

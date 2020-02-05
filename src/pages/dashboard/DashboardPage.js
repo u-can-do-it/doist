@@ -3,7 +3,7 @@ import useTaskState from "../../store/TaskState";
 
 import styled from "styled-components";
 
-import WithSpinner from "../../components/with-spinner/with-spinner";
+import WithSpinner from "../../components/with-spinner/withSpinner";
 import ListWithHeader from "../../components/tasks-list/ListWithHeader";
 import AddTask from "../../components/add-task/AddTask";
 
@@ -89,8 +89,12 @@ const DashboardPage = ({ match }) => {
     <StyledDashboard>
       <StyledContentContainer>
         <h1>{header}</h1>
-        <WithSpinner isLoading={isFetching}>{list}</WithSpinner>
-        <AddTask />
+        <WithSpinner isLoading={isFetching}>
+          <>
+            {list}
+            <AddTask />
+          </>
+        </WithSpinner>
       </StyledContentContainer>
     </StyledDashboard>
   );
