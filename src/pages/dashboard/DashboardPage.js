@@ -75,11 +75,7 @@ const DashboardPage = ({ match }) => {
         );
         break;
       default:
-        list = (
-          <>
-            <ListWithHeader list={tasks.inbox} />
-          </>
-        );
+        list = <ListWithHeader list={tasks.inbox} />;
 
         header = "Inbox";
     }
