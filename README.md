@@ -1,7 +1,7 @@
 ## DOIST
 
 ### [Live](https://u-can-do-it.github.io/doist/)
-![app social preview](https://repository-images.githubusercontent.com/236536723/5d25f880-4b5e-11ea-939a-908161fc79d7)
+![app social preview](https://repository-images.githubusercontent.com/236536723/96ab3380-4b5f-11ea-91ac-0b22475985ba)
 
 ### Tech stack
 
