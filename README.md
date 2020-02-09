@@ -1,8 +1,15 @@
 ## DOIST
 
 ### [Live](https://u-can-do-it.github.io/doist/)
+![app social preview](https://repository-images.githubusercontent.com/236536723/5d25f880-4b5e-11ea-939a-908161fc79d7)
 
-This application was built using create-react-app as a base, and the technologies used were React (Custom Hooks, Context), Axios, Styled Componets.
+### Tech stack
+
+- React (Hooks, Context)
+- React Router Dom
+- JavaScript
+- Styled Componets
+- Axios
 
 ### Available scripts
 
