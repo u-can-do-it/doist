@@ -8,7 +8,7 @@
 - React (Hooks, Context)
 - React Router Dom
 - JavaScript
-- Styled Componets
+- Styled Components
 - Axios
 
 ### Available scripts
