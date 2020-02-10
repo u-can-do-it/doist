@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import styled from "styled-components";
 
 const StyledFormInput = styled.div`
@@ -31,3 +32,9 @@ const FormInput = ({ handleChange, label, feedback, ...rest }) => (
   </StyledFormInput>
 );
 export default FormInput;
+
+FormInput.propTypes = {
+  handleChange: PropTypes.func,
+  label: PropTypes.string.isRequired,
+  feedback: PropTypes.string
+};
