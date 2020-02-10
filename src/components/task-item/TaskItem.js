@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import PropTypes from "prop-types";
 
 import Checkbox from "../checkbox/Checkbox";
 import TaskItemMenu from "./TaskItemMenu";
@@ -77,3 +78,7 @@ const TaskItem = ({ task }) => {
 };
 
 export default TaskItem;
+
+TaskItem.propTypes = {
+  task: Object
+};

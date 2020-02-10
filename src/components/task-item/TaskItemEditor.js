@@ -75,7 +75,7 @@ const TaskItemEditor = ({ hide, task }) => {
     task
       ? {
           ...task,
-          deadline: task.deadline ? new Date(task.deadline) : new Date()
+          deadline: new Date(task.deadline) || new Date()
         }
       : new Task()
   );
