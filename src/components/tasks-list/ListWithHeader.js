@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import TaskItem from "../task-item/TaskItem";
+import PropTypes from "prop-types";
 
 const StyledListWithHeader = styled.div`
   h2 {
@@ -38,3 +39,9 @@ const ListWithHeader = ({ header = "", subHeader = "", list = [] }) => (
 );
 
 export default ListWithHeader;
+
+ListWithHeader.propTypes = {
+  header: PropTypes.string,
+  subHeader: PropTypes.string,
+  list: PropTypes.arrayOf(Object)
+};

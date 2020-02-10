@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import Calendar from "react-calendar";
+import PropTypes from "prop-types";
 
 import OptionButton from "../option-button.js/OptionButton";
 
@@ -88,3 +89,8 @@ const DatePick = ({ currentDate, onDatePick }) => {
 };
 
 export default DatePick;
+
+DatePick.propTypes = {
+  currentDate: PropTypes.objectOf(Date),
+  onDatePick: PropTypes.func
+};

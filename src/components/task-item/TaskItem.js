@@ -80,5 +80,5 @@ const TaskItem = ({ task }) => {
 export default TaskItem;
 
 TaskItem.propTypes = {
-  task: Object
+  task: PropTypes.object
 };
