@@ -7,7 +7,7 @@ import TaskItemMenu from "./TaskItemMenu";
 import TaskItemEditor from "./TaskItemEditor";
 import useTaskState from "../../store/TaskState";
 
-const StyledTaskItem = styled.div`
+const StyledTaskItem = styled.li`
   display: flex;
   min-height: 7rem;
   height: 100%;
