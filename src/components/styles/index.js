@@ -17,7 +17,7 @@ export const pyramids = css`
   background-size: cover;
   background-position: center;
 `;
-
+console.log("test");
 const size = {
   mobileS: "320px",
   mobileM: "375px",
@@ -25,7 +25,7 @@ const size = {
   tablet: "768px",
   laptop: "1024px",
   laptopL: "1440px",
-  desktop: "2560px"
+  desktop: "2560px",
 };
 
 export const device = {
@@ -36,5 +36,5 @@ export const device = {
   laptop: `(max-width: ${size.laptop})`,
   laptopL: `(max-width: ${size.laptopL})`,
   desktop: `(max-width: ${size.desktop})`,
-  desktopL: `(max-width: ${size.desktop})`
+  desktopL: `(max-width: ${size.desktop})`,
 };
